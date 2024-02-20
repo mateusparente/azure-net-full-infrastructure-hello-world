@@ -18,8 +18,9 @@ locals {
     operations_vault_name   = "mng-mateusparente-kv"
     operations_rg_name      = "management-rg"
 
-    apim_custom_gateway_domain = "${local.domain_name}.mateusparente.com"
-    apim_custom_developer_domain = "${local.domain_name}-developer.mateusparente.com"
+    apim_prefix = var.environment == "dev" ? "" : "${var.environment}-"
+    apim_custom_gateway_domain = "${local.apim_prefix}apis.mateusparente.com"
+    apim_custom_developer_domain = "${local.apim_prefix}developers.mateusparente.com"
 
     tags = {
         environment = var.environment
