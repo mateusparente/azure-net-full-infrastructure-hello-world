@@ -1,6 +1,7 @@
 name: ASP.NET CI
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'TodoApi/**'
