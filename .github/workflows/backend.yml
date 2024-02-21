@@ -28,4 +28,4 @@ jobs:
         context: ./TodoApi
         file: ./TodoApi/Dockerfile
         push: true
-        tags: ${{ var.AZURE_REGISTRY_NAME }}/todoapi:latest
+        tags: ${{ secrets.AZURE_REGISTRY_NAME }}/todoapi:latest
