@@ -2,6 +2,14 @@ name: ASP.NET CI
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Environment for Deployment
+        default: dev
+        options: 
+        - dev
+        - prod
   push:
     paths:
       - 'TodoApi/**'
@@ -29,4 +37,4 @@ jobs:
         context: ./TodoApi
         file: ./TodoApi/Dockerfile
         push: true
-        tags: ${{ secrets.AZURE_REGISTRY_NAME }}/todoapi:latest
+        tags: ${{ secrets.AZURE_REGISTRY_NAME }}/todo-api:latest
