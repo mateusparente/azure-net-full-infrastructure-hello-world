@@ -1,15 +1,16 @@
-name: ASP.NET CI
+name: Todo-API CI
 
 on:
   workflow_dispatch:
     inputs:
-      environment:
+      deployment_environment:
         type: choice
         description: Environment for Deployment
-        default: dev
+        default: none
         options: 
         - dev
         - prod
+        - none
   push:
     paths:
       - 'TodoApi/**'
@@ -37,4 +38,18 @@ jobs:
         context: ./TodoApi
         file: ./TodoApi/Dockerfile
         push: true
-        tags: ${{ secrets.AZURE_REGISTRY_NAME }}/todo-api:latest
+        tags: ${{ secrets.AZURE_REGISTRY_NAME }}/todo-api:0.0.$GITHUB_RUN_NUMBER
+
+    - name: Deployment
+      if: inputs.deployment_environment != 'none'
+      env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets[format('{0}_SUBSCRIPTION',inputs.deployment_environment)] }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+        TF_VAR_environment: ${{inputs.deployment_environment}}
+        TF_VAR_release_number: 0.0.$GITHUB_RUN_NUMBER
+      working-directory: ./TodoApi/terraform
+      run: |
+        terraform init -backend-config=${{inputs.deployment_environment}} -input=false
+        terraform apply -input=false -auto-approve
