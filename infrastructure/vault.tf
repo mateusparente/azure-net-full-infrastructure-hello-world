@@ -3,7 +3,7 @@ data "azurerm_key_vault" "operations_management" {
     name                = local.operations_vault_name
     resource_group_name = local.operations_rg_name
 }
-
+/*
 resource "azurerm_key_vault_access_policy" "current_access" {
   key_vault_id = data.azurerm_key_vault.operations_management.id
   tenant_id = data.azurerm_client_config.current.tenant_id
@@ -12,7 +12,7 @@ resource "azurerm_key_vault_access_policy" "current_access" {
       "Get",
       "List"
   ]
-}
+}*/
 
 resource "azurerm_key_vault_access_policy" "apim_certificate_access" {
   key_vault_id = data.azurerm_key_vault.operations_management.id
