@@ -41,7 +41,7 @@ jobs:
         tags: ${{ secrets.AZURE_REGISTRY_NAME }}/todo-api:0.0.${{github.run_number}}
 
     - name: Deployment
-      if: inputs.deployment_environment != 'none'
+      if: inputs.deployment_environment != '' && inputs.deployment_environment != 'none'
       env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
