@@ -29,6 +29,10 @@ In this project was used
 
 ![plot](./aks_architecture.png)
 
+## Warning
+
+Some approaches used on this project, such as the release versioning, environment isolation and network restrictions need a better plan for production and enterprise environments. The goal of this project was to be used as a simple example of a full software development lifecycle.
+
 ## Prerequisites
 
 - Terraform
