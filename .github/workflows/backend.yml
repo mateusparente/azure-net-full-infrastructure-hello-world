@@ -38,7 +38,7 @@ jobs:
         context: ./TodoApi
         file: ./TodoApi/Dockerfile
         push: true
-        tags: ${{ secrets.AZURE_REGISTRY_NAME }}/todo-api:0.0.$GITHUB_RUN_NUMBER
+        tags: ${{ secrets.AZURE_REGISTRY_NAME }}/todo-api:0.0.${{github.run_number}}
 
     - name: Deployment
       if: inputs.deployment_environment != 'none'
@@ -48,7 +48,7 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ secrets[format('{0}_SUBSCRIPTION',inputs.deployment_environment)] }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
         TF_VAR_environment: ${{inputs.deployment_environment}}
-        TF_VAR_release_number: 0.0.$GITHUB_RUN_NUMBER
+        TF_VAR_release_number: 0.0.${{github.run_number}}
       working-directory: ./TodoApi/terraform
       run: |
         terraform init -backend-config=${{inputs.deployment_environment}} -input=false
