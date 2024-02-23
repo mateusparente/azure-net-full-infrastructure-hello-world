@@ -51,5 +51,5 @@ jobs:
         TF_VAR_release_number: 0.0.${{github.run_number}}
       working-directory: ./TodoApi/terraform
       run: |
-        terraform init -backend-config=${{inputs.deployment_environment}} -input=false
+        terraform init -backend-config=${{inputs.deployment_environment}}.conf -input=false
         terraform apply -input=false -auto-approve
