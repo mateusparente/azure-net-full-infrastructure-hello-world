@@ -42,3 +42,13 @@ resource "azurerm_api_management_custom_domain" "sandbox" {
   }
   depends_on = [ azurerm_key_vault_access_policy.apim_certificate_access ]
 }
+
+resource "azurerm_api_management_product" "public" {
+  product_id            = "test-product"
+  resource_group_name   = azurerm_resource_group.infrastructure.name
+  api_management_name   = azurerm_api_management.infra.name
+  display_name          = "Test Product"
+  subscription_required = false
+  approval_required     = false
+  published             = true
+}

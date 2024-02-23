@@ -22,6 +22,7 @@ provider "azurerm" {
 
 locals {
     location                    = "UK South"
+    api_name                    = "todo-api"
     infra_name_prefix           = "${var.environment}-infrastructure"
     infra_resource_group_name   = "${local.infra_name_prefix}-rg"
     aks_cluster_name            = "${local.infra_name_prefix}-aks"

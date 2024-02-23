@@ -1,27 +1,27 @@
 resource "kubernetes_deployment" "api" {
   metadata {
-    name = "todo-api"
+    name = local.api_name
   }
   spec {
     replicas = 1
     selector {
       match_labels = {
-        app = "todo-api"
+        app = local.api_name
       }
     }
     template {
       metadata {
         labels = {
-          app = "todo-api"
+          app = local.api_name
         }
       }
       spec {
         container {
-          image = "mateusparente.azurecr.io/todo-api:latest"
-          name  = "todo-api"
+          image = "mateusparente.azurecr.io/${local.api_name}:${var.release_number}"
+          name  = local.api_name
           env {
             name  = "ASPNETCORE_ENVIRONMENT"
-            value = "Development"
+            value = var.environment == "dev" ? "Development" : "Production"
           }
           port {
             container_port = 8080
